@@ -34,20 +34,26 @@ df1["distance"] = df1["distance"].sort_values()
 print(df1["distance"])
 suitable_stars = []
 star_dist = []
-star_dist.append(df1[3])
-suitable_stars.append(df1)
-print(suitable_stars)
-for i,value in enumerate(star_dist):
-    if value != "NaN":
-        if int(value) > 100:
-            suitable_stars.pop(i)
-
-for i,value in enumerate(suitable_stars[6]):
-    if 150 < int(value) and int(value) < 350:
-        pass
+for i in df1["distance"]:
+    if i <= 100:
+        suitable_stars.append(True)
     else:
-        suitable_stars.pop(i)
+        suitable_stars.append(False)
 
-print(suitable_stars)
-suitable_star = pd.DataFrame(suitable_stars)
-suitable_star.to_csv("filter_data.csv")
+suitable_stars_new_data = pd.Series(suitable_stars)
+new_data = df1[suitable_stars_new_data]
+print(new_data)
+suitable_stars_1 = []
+
+for i in df1["distance"]:
+    if 150 < i and i < 350:
+        suitable_stars_1.append(True)
+    else:
+        suitable_stars_1.append(False)
+
+suitable_stars_new_data_1 = pd.Series(suitable_stars_1)
+new_data_1 = df1[suitable_stars_new_data_1]
+
+print(new_data_1)
+new_data_1.reset_index(inplace = True)
+new_data_1.to_csv("filter_data.csv")
